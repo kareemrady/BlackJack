@@ -73,14 +73,9 @@ class BlackJack
 user_input = gets.chomp
 if user_input == "1"
 	player.hit
-	puts "#{player.name}, your cards are #{player.cards} & the dealer has #{dealer.cards}"
-	puts "#{player.name}, your score is #{player.score} & the dealer scored #{dealer.score}"
-else 
-	player.stay
-	puts "#{player.name}, your cards are #{player.cards} & the dealer has #{dealer.cards}"
-	puts "#{player.name}, your score is #{player.score} & the dealer scored #{dealer.score}"
-end
-while dealer.score < 17
+	if dealer.score < 17
+	dealer.hit
+else
 	choice = rand(2) + 1
 	if choice == 1
 		dealer.hit
@@ -88,12 +83,33 @@ while dealer.score < 17
 		dealer.stay
 	end
 end
+	puts "#{player.name}, your cards are #{player.cards} & the dealer has #{dealer.cards}"
+	puts "#{player.name}, your score is #{player.score} & the dealer scored #{dealer.score}"
+else 
+	player.stay
+	if dealer.score < 17
+	dealer.hit
+else
+	choice = rand(2) + 1
+	if choice == 1
+		dealer.hit
+	else
+		dealer.stay
+	end
 end
+	puts "#{player.name}, your cards are #{player.cards} & the dealer has #{dealer.cards}"
+	puts "#{player.name}, your score is #{player.score} & the dealer scored #{dealer.score}"
+
+
+end
+end
+
+
 	if player.score == 21 && dealer.score == 21
 		puts "Draw , #{player.name}, you & the dealer both scored #{player.score}"
-	elsif player.score == 21 || (player.score - 21 < dealer.score - 21)
+	elsif player.score == 21 || ((player.score - 21).abs < (dealer.score - 21).abs)
 		puts "#{player.name}, You Win!!!, You scored #{player.score} , BlackJack!!!!"
-	elsif dealer.score == 21 || (dealer.score - 21 < player.score - 21)
+	elsif dealer.score == 21 || ((dealer.score - 21).abs < (player.score - 21).abs)
 		puts "Dealer hits BlackJack, You Lose. Better luck next time #{player.name}"
 	else
 		puts "Draw , You Scored #{player.score} & the dealer scored #{dealer.score}"
